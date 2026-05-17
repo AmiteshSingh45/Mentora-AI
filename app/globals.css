@@ -1,0 +1,402 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+/* ==========================================
+   LearnAI Design System — Global Styles
+   ========================================== */
+
+/* Geist Font */
+@font-face {
+  font-family: 'Geist';
+  src: url('https://cdn.jsdelivr.net/npm/geist-font@1.1.0/fonts/geist-sans/Geist-Regular.woff2') format('woff2');
+  font-weight: 400; font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('https://cdn.jsdelivr.net/npm/geist-font@1.1.0/fonts/geist-sans/Geist-Medium.woff2') format('woff2');
+  font-weight: 500; font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('https://cdn.jsdelivr.net/npm/geist-font@1.1.0/fonts/geist-sans/Geist-SemiBold.woff2') format('woff2');
+  font-weight: 600; font-display: swap;
+}
+@font-face {
+  font-family: 'Geist';
+  src: url('https://cdn.jsdelivr.net/npm/geist-font@1.1.0/fonts/geist-sans/Geist-Bold.woff2') format('woff2');
+  font-weight: 700; font-display: swap;
+}
+
+@theme {
+  /* ---- Color Palette ---- */
+  --color-background: #10131a;
+  --color-surface: #10131a;
+  --color-surface-dim: #10131a;
+  --color-surface-bright: #363941;
+  --color-surface-variant: #32353c;
+  --color-surface-container-lowest: #0b0e15;
+  --color-surface-container-low: #191b23;
+  --color-surface-container: #1d2027;
+  --color-surface-container-high: #272a31;
+  --color-surface-container-highest: #32353c;
+
+  --color-on-surface: #e1e2ec;
+  --color-on-surface-variant: #c2c6d6;
+  --color-inverse-surface: #e1e2ec;
+  --color-inverse-on-surface: #2e3038;
+
+  --color-outline: #8c909f;
+  --color-outline-variant: #424754;
+
+  --color-primary: #adc6ff;
+  --color-on-primary: #002e6a;
+  --color-primary-container: #4d8eff;
+  --color-on-primary-container: #00285d;
+  --color-primary-fixed: #d8e2ff;
+  --color-primary-fixed-dim: #adc6ff;
+  --color-on-primary-fixed: #001a42;
+  --color-on-primary-fixed-variant: #004395;
+  --color-inverse-primary: #005ac2;
+  --color-surface-tint: #adc6ff;
+
+  --color-secondary: #ddb7ff;
+  --color-on-secondary: #490080;
+  --color-secondary-container: #6f00be;
+  --color-on-secondary-container: #d6a9ff;
+  --color-secondary-fixed: #f0dbff;
+  --color-secondary-fixed-dim: #ddb7ff;
+  --color-on-secondary-fixed: #2c0051;
+  --color-on-secondary-fixed-variant: #6900b3;
+
+  --color-tertiary: #ffb786;
+  --color-on-tertiary: #502400;
+  --color-tertiary-container: #df7412;
+  --color-on-tertiary-container: #461f00;
+  --color-tertiary-fixed: #ffdcc6;
+  --color-tertiary-fixed-dim: #ffb786;
+  --color-on-tertiary-fixed: #311400;
+  --color-on-tertiary-fixed-variant: #723600;
+
+  --color-error: #ffb4ab;
+  --color-on-error: #690005;
+  --color-error-container: #93000a;
+  --color-on-error-container: #ffdad6;
+
+  /* ---- Typography ---- */
+  --font-geist: 'Geist', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* ---- Border Radius ---- */
+  --radius-sm: 0.25rem;
+  --radius: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+}
+
+/* ==========================================
+   Base Reset
+   ========================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-geist);
+  background-color: var(--color-background);
+  color: var(--color-on-surface);
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+::selection {
+  background-color: rgba(173, 198, 255, 0.25);
+}
+
+/* ==========================================
+   Utility Classes — Design System
+   ========================================== */
+
+/* Glass morphism panels */
+.glass-card {
+  background: rgba(28, 28, 30, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top-color: rgba(255, 255, 255, 0.14);
+  border-left-color: rgba(255, 255, 255, 0.12);
+}
+
+.glass-panel {
+  background: rgba(28, 28, 30, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-modal {
+  background: rgba(28, 28, 30, 0.88);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Light leaks / glow orbs */
+.light-leak-blue {
+  background: radial-gradient(circle at center, rgba(173, 198, 255, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.light-leak-purple {
+  background: radial-gradient(circle at center, rgba(221, 183, 255, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.light-leak-hero {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(173, 198, 255, 0.15) 0%, rgba(111, 0, 190, 0) 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Neon glow effects */
+.neon-glow-primary {
+  box-shadow: 0 0 20px rgba(173, 198, 255, 0.15);
+}
+
+.neon-glow-secondary {
+  box-shadow: 0 0 20px rgba(221, 183, 255, 0.15);
+}
+
+.neon-border-primary {
+  box-shadow: 0 0 0 1px rgba(173, 198, 255, 0.4), 0 0 20px rgba(173, 198, 255, 0.1);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #adc6ff 0%, #ddb7ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-hero {
+  background: linear-gradient(180deg, #e1e2ec 0%, #8c909f 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Primary gradient background */
+.btn-gradient {
+  background: linear-gradient(135deg, #4d8eff 0%, #6f00be 100%);
+  transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+  box-shadow: 0 0 25px rgba(77, 142, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+/* Scrollbar styling */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+/* ==========================================
+   Animation Keyframes
+   ========================================== */
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes typing-dot {
+  0%, 80%, 100% { transform: scale(0); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes waveform {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes streak-flame {
+  0%, 100% { transform: scale(1) rotate(-2deg); filter: brightness(1); }
+  50% { transform: scale(1.1) rotate(2deg); filter: brightness(1.3); }
+}
+
+.animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+.animate-gradient { animation: gradient-shift 4s ease infinite; background-size: 200% 200%; }
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-streak { animation: streak-flame 1.5s ease-in-out infinite; }
+
+.typing-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.typing-dot:nth-child(1) { animation: typing-dot 1.4s 0s infinite; }
+.typing-dot:nth-child(2) { animation: typing-dot 1.4s 0.2s infinite; }
+.typing-dot:nth-child(3) { animation: typing-dot 1.4s 0.4s infinite; }
+
+/* ==========================================
+   Typography Scale
+   ========================================== */
+.text-display-lg {
+  font-size: 64px;
+  line-height: 72px;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+  font-family: var(--font-geist);
+}
+
+.text-headline-lg {
+  font-size: 40px;
+  line-height: 48px;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  font-family: var(--font-geist);
+}
+
+.text-headline-lg-mobile {
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  font-family: var(--font-geist);
+}
+
+.text-headline-md {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 600;
+  font-family: var(--font-geist);
+}
+
+.text-body-lg {
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 400;
+  font-family: var(--font-geist);
+}
+
+.text-body-md {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  font-family: var(--font-geist);
+}
+
+.text-label-sm {
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+  font-family: var(--font-geist);
+}
+
+.text-label-caps {
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .text-display-lg {
+    font-size: 40px;
+    line-height: 48px;
+  }
+  .text-headline-lg {
+    font-size: 32px;
+    line-height: 40px;
+  }
+}
+
+/* ==========================================
+   Component Patterns
+   ========================================== */
+
+/* Progress bar pulse */
+.progress-pulse::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 8px;
+  background: rgba(255, 255, 255, 0.5);
+  filter: blur(3px);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* AI thinking indicator */
+.ai-thinking-ring {
+  background: conic-gradient(from 0deg, #adc6ff, #ddb7ff, #adc6ff);
+  animation: gradient-shift 1.5s linear infinite;
+}
+
+/* Sidebar active indicator */
+.nav-active {
+  border-left: 2px solid var(--color-secondary);
+  background: rgba(111, 0, 190, 0.08);
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+/* Code block styling */
+.code-block {
+  font-family: var(--font-mono);
+  background: var(--color-surface-container-highest);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+/* Streak badge */
+.streak-badge {
+  background: linear-gradient(135deg, #ff6b35, #ff3d71);
+  box-shadow: 0 0 20px rgba(255, 107, 53, 0.4);
+}

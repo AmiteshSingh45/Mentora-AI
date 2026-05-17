@@ -1,0 +1,192 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id           String    @id @default(cuid())
+  clerkId      String    @unique
+  email        String    @unique
+  name         String?
+  imageUrl     String?
+  plan         Plan      @default(FREE)
+  streak       Int       @default(0)
+  longestStreak Int      @default(0)
+  lastActiveAt DateTime  @default(now())
+  xp           Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  sessions     ChatSession[]
+  documents    Document[]
+  quizAttempts QuizAttempt[]
+  notes        Note[]
+  progress     LearningProgress[]
+  subscription Subscription?
+}
+
+model ChatSession {
+  id        String    @id @default(cuid())
+  userId    String
+  title     String    @default("New Session")
+  subject   String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages Message[]
+}
+
+model Message {
+  id        String      @id @default(cuid())
+  sessionId String
+  role      MessageRole
+  content   String      @db.Text
+  metadata  Json?
+  createdAt DateTime    @default(now())
+
+  session ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}
+
+model Document {
+  id        String    @id @default(cuid())
+  userId    String
+  name      String
+  fileUrl   String
+  fileKey   String    @unique
+  fileSize  Int
+  pageCount Int?
+  status    DocStatus @default(PROCESSING)
+  vectorNs  String?
+  summary   String?   @db.Text
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  user   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chunks DocChunk[]
+}
+
+model DocChunk {
+  id         String @id @default(cuid())
+  documentId String
+  content    String @db.Text
+  vectorId   String @unique
+  page       Int
+  chunkIndex Int
+
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+}
+
+model Quiz {
+  id         String     @id @default(cuid())
+  userId     String
+  title      String
+  subject    String
+  difficulty Difficulty @default(MEDIUM)
+  questions  Json
+  source     QuizSource
+  sourceId   String?
+  createdAt  DateTime   @default(now())
+
+  attempts QuizAttempt[]
+}
+
+model QuizAttempt {
+  id          String   @id @default(cuid())
+  userId      String
+  quizId      String
+  score       Float
+  answers     Json
+  timeTaken   Int
+  completedAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
+}
+
+model Note {
+  id        String     @id @default(cuid())
+  userId    String
+  title     String
+  content   String     @db.Text
+  format    NoteFormat @default(MARKDOWN)
+  subject   String?
+  tags      String[]
+  sourceId  String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model LearningProgress {
+  id        String   @id @default(cuid())
+  userId    String
+  subject   String
+  topic     String
+  mastery   Float    @default(0)
+  studyTime Int      @default(0)
+  date      DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, subject, topic, date])
+}
+
+model Subscription {
+  id               String    @id @default(cuid())
+  userId           String    @unique
+  stripeCustomerId String    @unique
+  stripeSubId      String    @unique
+  plan             Plan
+  status           SubStatus
+  currentPeriodEnd DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum Plan {
+  FREE
+  PRO
+  PREMIUM
+}
+
+enum MessageRole {
+  USER
+  ASSISTANT
+}
+
+enum DocStatus {
+  PROCESSING
+  READY
+  FAILED
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+enum QuizSource {
+  PDF
+  TOPIC
+  CHAT
+}
+
+enum NoteFormat {
+  MARKDOWN
+  PDF
+  BULLETS
+}
+
+enum SubStatus {
+  ACTIVE
+  CANCELLED
+  PAST_DUE
+}
