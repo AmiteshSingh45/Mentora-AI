@@ -115,7 +115,6 @@ export function AppHeader({ streak = 0, xp = 0 }: AppHeaderProps) {
 
         {/* User Button (Clerk) */}
         <UserButton
-          afterSignOutUrl="/"
           appearance={{
             elements: {
               avatarBox: "w-8 h-8 border border-primary/30 rounded-full",

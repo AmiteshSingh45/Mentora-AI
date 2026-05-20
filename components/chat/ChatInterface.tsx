@@ -252,8 +252,8 @@ export function AIChatInterface({ sessionId, initialMessages = [] }: AIChatInter
                     </div>
                   ) : (
                     <div className="p-5 rounded-2xl rounded-tl-none glass-card border border-outline-variant/20 shadow-xl">
+                    <div className="prose prose-invert prose-sm max-w-none text-on-surface">
                       <ReactMarkdown
-                        className="prose prose-invert prose-sm max-w-none text-on-surface"
                         components={{
                           code({ node, className, children, ...props }) {
                             const match = /language-(\w+)/.exec(className || "");
@@ -309,6 +309,7 @@ export function AIChatInterface({ sessionId, initialMessages = [] }: AIChatInter
                       >
                         {message.content}
                       </ReactMarkdown>
+                      </div>
                     </div>
                   )}
 

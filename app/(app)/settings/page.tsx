@@ -24,7 +24,7 @@ export default async function SettingsPage() {
     PRO: { label: "Pro", sessions: 100, pdfs: 20, quizzes: 50, color: "#adc6ff" },
     PREMIUM: { label: "Premium", sessions: 1000, pdfs: 100, quizzes: 500, color: "#ddb7ff" },
   };
-  const planInfo = PLAN_FEATURES[plan];
+  const planInfo = PLAN_FEATURES[plan as keyof typeof PLAN_FEATURES];
 
   return (
     <div className="max-w-[1280px] mx-auto px-6 md:px-12 py-8">

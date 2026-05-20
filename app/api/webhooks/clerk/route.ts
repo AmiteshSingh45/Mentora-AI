@@ -49,9 +49,9 @@ export async function POST(req: NextRequest) {
             imageUrl: image_url || null,
           },
         })
-        .catch((err) => {
+        .catch((err: unknown) => {
           // Handle case where user already exists (idempotent)
-          if (err.code !== "P2002") throw err;
+          if ((err as { code?: string }).code !== "P2002") throw err;
         });
 
       console.log(`✅ User created in DB: ${email}`);

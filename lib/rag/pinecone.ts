@@ -60,7 +60,7 @@ export async function upsertVectors(
   const batchSize = 100;
   for (let i = 0; i < vectors.length; i += batchSize) {
     const batch = vectors.slice(i, i + batchSize);
-    await ns.upsert(batch);
+    await (ns.upsert as (v: unknown) => Promise<void>)(batch);
   }
 }
 
@@ -84,7 +84,7 @@ export async function searchVectors(
   return (results.matches ?? []).map((match) => ({
     id: match.id,
     score: match.score ?? 0,
-    metadata: match.metadata as VectorMetadata,
+    metadata: match.metadata as unknown as VectorMetadata,
   }));
 }
 

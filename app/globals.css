@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap');
 
 /* ==========================================
    LearnAI Design System — Global Styles
@@ -7,24 +6,35 @@
 
 /* Geist Font */
 @font-face {
-  font-family: 'Geist';
-  src: url('https://cdn.jsdelivr.net/npm/geist-font@1.1.0/fonts/geist-sans/Geist-Regular.woff2') format('woff2');
-  font-weight: 400; font-display: swap;
+  font-family: "Geist";
+  src: url("https://cdn.jsdelivr.net/npm/geist-font@1.1.0/fonts/geist-sans/Geist-Regular.woff2")
+    format("woff2");
+  font-weight: 400;
+  font-display: swap;
 }
+
 @font-face {
-  font-family: 'Geist';
-  src: url('https://cdn.jsdelivr.net/npm/geist-font@1.1.0/fonts/geist-sans/Geist-Medium.woff2') format('woff2');
-  font-weight: 500; font-display: swap;
+  font-family: "Geist";
+  src: url("https://cdn.jsdelivr.net/npm/geist-font@1.1.0/fonts/geist-sans/Geist-Medium.woff2")
+    format("woff2");
+  font-weight: 500;
+  font-display: swap;
 }
+
 @font-face {
-  font-family: 'Geist';
-  src: url('https://cdn.jsdelivr.net/npm/geist-font@1.1.0/fonts/geist-sans/Geist-SemiBold.woff2') format('woff2');
-  font-weight: 600; font-display: swap;
+  font-family: "Geist";
+  src: url("https://cdn.jsdelivr.net/npm/geist-font@1.1.0/fonts/geist-sans/Geist-SemiBold.woff2")
+    format("woff2");
+  font-weight: 600;
+  font-display: swap;
 }
+
 @font-face {
-  font-family: 'Geist';
-  src: url('https://cdn.jsdelivr.net/npm/geist-font@1.1.0/fonts/geist-sans/Geist-Bold.woff2') format('woff2');
-  font-weight: 700; font-display: swap;
+  font-family: "Geist";
+  src: url("https://cdn.jsdelivr.net/npm/geist-font@1.1.0/fonts/geist-sans/Geist-Bold.woff2")
+    format("woff2");
+  font-weight: 700;
+  font-display: swap;
 }
 
 @theme {
@@ -309,6 +319,13 @@ body {
 .text-headline-md {
   font-size: 24px;
   line-height: 32px;
+  font-weight: 600;
+  font-family: var(--font-geist);
+}
+
+.text-headline-sm {
+  font-size: 20px;
+  line-height: 28px;
   font-weight: 600;
   font-family: var(--font-geist);
 }

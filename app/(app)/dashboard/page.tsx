@@ -46,14 +46,15 @@ async function getDashboardData(clerkUserId: string): Promise<DashboardStats> {
     );
     return {
       day: day.label,
-      minutes: dayProgress.reduce((sum, p) => sum + p.studyTime, 0),
+      minutes: dayProgress.reduce((sum: number, p: { date: Date; studyTime: number }) => sum + p.studyTime, 0),
       sessions: dayProgress.length,
     };
   });
 
   // Top subjects by mastery
+  type ProgressEntry = { subject: string; mastery: number; studyTime: number; date: Date };
   const subjectMap = new Map<string, number[]>();
-  user.progress.forEach((p) => {
+  (user.progress as ProgressEntry[]).forEach((p) => {
     if (!subjectMap.has(p.subject)) subjectMap.set(p.subject, []);
     subjectMap.get(p.subject)!.push(p.mastery);
   });
@@ -69,7 +70,7 @@ async function getDashboardData(clerkUserId: string): Promise<DashboardStats> {
 
   // Recent activity
   const recentActivity = [
-    ...user.quizAttempts.slice(0, 3).map((attempt) => ({
+    ...user.quizAttempts.slice(0, 3).map((attempt: { id: string; completedAt: Date; score: number; quiz: { title: string; subject: string } }) => ({
       id: attempt.id,
       type: "QUIZ" as const,
       title: `Completed Quiz: ${attempt.quiz.title}`,
@@ -77,14 +78,14 @@ async function getDashboardData(clerkUserId: string): Promise<DashboardStats> {
       timestamp: attempt.completedAt,
       score: attempt.score,
     })),
-    ...user.documents.slice(0, 2).map((doc) => ({
+    ...user.documents.slice(0, 2).map((doc: { id: string; name: string; pageCount: number | null; createdAt: Date }) => ({
       id: doc.id,
       type: "PDF" as const,
       title: `PDF: ${doc.name}`,
       detail: `${doc.pageCount ?? "?"} pages • Analyzed`,
       timestamp: doc.createdAt,
     })),
-    ...user.sessions.slice(0, 2).map((session) => ({
+    ...user.sessions.slice(0, 2).map((session: { id: string; title: string; subject: string | null; updatedAt: Date }) => ({
       id: session.id,
       type: "CHAT" as const,
       title: `AI Session: ${session.title}`,
@@ -93,9 +94,9 @@ async function getDashboardData(clerkUserId: string): Promise<DashboardStats> {
     })),
   ].sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime()).slice(0, 6);
 
-  const totalStudyTime = weeklyStudyData.reduce((sum, d) => sum + d.minutes, 0);
+  const totalStudyTime = weeklyStudyData.reduce((sum: number, d) => sum + d.minutes, 0);
   const avgQuizScore = user.quizAttempts.length
-    ? user.quizAttempts.reduce((sum, a) => sum + a.score, 0) / user.quizAttempts.length
+    ? user.quizAttempts.reduce((sum: number, a: { score: number }) => sum + a.score, 0) / user.quizAttempts.length
     : 0;
 
   return {
@@ -108,7 +109,7 @@ async function getDashboardData(clerkUserId: string): Promise<DashboardStats> {
     quizzesCompleted: user.quizAttempts.length,
     documentsUploaded: user.documents.length,
     sessionsThisWeek: user.sessions.filter(
-      (s) => s.updatedAt > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+      (s: { updatedAt: Date }) => s.updatedAt > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
     ).length,
     weeklyStudyData,
     topSubjects,
